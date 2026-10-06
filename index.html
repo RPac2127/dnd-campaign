@@ -1,0 +1,4738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>The Shattered Crown</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            #40366d,
+            #11101d 45%,
+            #050509 90%
+        );
+
+    color: #eee;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    padding: 20px;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.game {
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    background:
+        rgba(12,12,20,.95);
+
+    border:
+        1px solid #51476e;
+
+    border-radius:
+        24px;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.65);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+
+    padding:
+        30px;
+
+    text-align:
+        center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #292442,
+            #141321
+        );
+
+    border-bottom:
+        1px solid #49415d;
+}
+
+header h1 {
+
+    margin:
+        0;
+
+    font-size:
+        clamp(38px,6vw,68px);
+
+    letter-spacing:
+        4px;
+
+    color:
+        #d9b86c;
+
+    text-shadow:
+        0 0 25px
+        rgba(220,180,90,.35);
+}
+
+header p {
+
+    color:
+        #aaa4b9;
+
+    font-size:
+        17px;
+
+    margin-bottom:
+        0;
+}
+
+
+/* =========================================
+   GAME LAYOUT
+========================================= */
+
+.layout {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        280px 1fr;
+
+    min-height:
+        700px;
+}
+
+
+/* =========================================
+   CHARACTER PANEL
+========================================= */
+
+.sidebar {
+
+    padding:
+        22px;
+
+    background:
+        #0d0d16;
+
+    border-right:
+        1px solid #343244;
+}
+
+.sidebar h2 {
+
+    margin-top:
+        0;
+
+    color:
+        #d9b86c;
+}
+
+.stat {
+
+    margin-bottom:
+        14px;
+}
+
+.statName {
+
+    color:
+        #777288;
+
+    text-transform:
+        uppercase;
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        2px;
+}
+
+.statValue {
+
+    font-size:
+        18px;
+
+    font-weight:
+        bold;
+
+    margin-top:
+        3px;
+}
+
+.bar {
+
+    height:
+        12px;
+
+    border-radius:
+        10px;
+
+    overflow:
+        hidden;
+
+    background:
+        #292735;
+
+    margin-top:
+        5px;
+}
+
+.barInner {
+
+    height:
+        100%;
+
+    transition:
+        width .4s;
+}
+
+.hp {
+
+    background:
+        linear-gradient(
+            90deg,
+            #8d263d,
+            #ed5064
+        );
+}
+
+.xp {
+
+    background:
+        linear-gradient(
+            90deg,
+            #5a43b5,
+            #9d73ff
+        );
+}
+
+.inventory {
+
+    border-top:
+        1px solid #343244;
+
+    margin-top:
+        20px;
+
+    padding-top:
+        20px;
+}
+
+.inventoryItem {
+
+    background:
+        #171622;
+
+    padding:
+        9px;
+
+    margin:
+        5px 0;
+
+    border-radius:
+        7px;
+
+    font-size:
+        14px;
+}
+
+
+/* =========================================
+   GAME
+========================================= */
+
+.main {
+
+    padding:
+        25px;
+
+    min-width:
+        0;
+}
+
+.sceneImage {
+
+    width:
+        100%;
+
+    height:
+        330px;
+
+    border-radius:
+        18px;
+
+    overflow:
+        hidden;
+
+    background:
+        #090910;
+
+    border:
+        1px solid #3e394c;
+
+    margin-bottom:
+        20px;
+}
+
+canvas {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    display:
+        block;
+}
+
+
+/* =========================================
+   STORY
+========================================= */
+
+.chapter {
+
+    color:
+        #d9b86c;
+
+    font-size:
+        13px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        3px;
+
+    margin-bottom:
+        8px;
+}
+
+h2 {
+
+    font-size:
+        30px;
+
+    margin:
+        5px 0 15px;
+}
+
+.story {
+
+    font-size:
+        18px;
+
+    line-height:
+        1.75;
+
+    color:
+        #d4d0da;
+}
+
+.story p {
+
+    margin:
+        12px 0;
+}
+
+
+/* =========================================
+   CHOICES
+========================================= */
+
+.choices {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+    margin-top:
+        25px;
+}
+
+button {
+
+    border:
+        1px solid #534b66;
+
+    background:
+        linear-gradient(
+            145deg,
+            #252234,
+            #151420
+        );
+
+    color:
+        #eee;
+
+    padding:
+        15px;
+
+    border-radius:
+        12px;
+
+    cursor:
+        pointer;
+
+    font-family:
+        inherit;
+
+    font-size:
+        16px;
+
+    text-align:
+        left;
+
+    transition:
+        .2s;
+}
+
+button:hover {
+
+    border-color:
+        #b89858;
+
+    transform:
+        translateY(-2px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #302a43,
+            #191724
+        );
+}
+
+button:active {
+
+    transform:
+        scale(.98);
+}
+
+
+/* =========================================
+   COMBAT
+========================================= */
+
+.combat {
+
+    display:
+        none;
+
+    padding:
+        20px;
+
+    border:
+        1px solid #6d3843;
+
+    background:
+        linear-gradient(
+            145deg,
+            #21151d,
+            #100e14
+        );
+
+    border-radius:
+        16px;
+
+    margin-top:
+        20px;
+}
+
+.enemy {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        15px;
+}
+
+.enemyName {
+
+    font-size:
+        24px;
+
+    color:
+        #ef7885;
+}
+
+.combatActions {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:
+        8px;
+
+    margin-top:
+        15px;
+}
+
+.combatActions button {
+
+    text-align:
+        center;
+
+}
+
+
+/* =========================================
+   LOG
+========================================= */
+
+.log {
+
+    margin-top:
+        20px;
+
+    max-height:
+        160px;
+
+    overflow-y:
+        auto;
+
+    padding:
+        12px;
+
+    border:
+        1px solid #302d3c;
+
+    border-radius:
+        10px;
+
+    background:
+        #090910;
+
+    font-family:
+        monospace;
+
+    font-size:
+        13px;
+
+    color:
+        #aaa5b4;
+}
+
+.logLine {
+
+    margin-bottom:
+        5px;
+}
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+.saveButtons {
+
+    display:
+        flex;
+
+    gap:
+        8px;
+
+    margin-top:
+        20px;
+}
+
+.saveButtons button {
+
+    flex:
+        1;
+
+    text-align:
+        center;
+
+    font-size:
+        13px;
+
+    padding:
+        10px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:850px) {
+
+    .layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .sidebar {
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid #343244;
+
+    }
+
+    .choices {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    body {
+        padding:
+            5px;
+    }
+
+    .main {
+        padding:
+            15px;
+    }
+
+    .sceneImage {
+        height:
+            250px;
+    }
+
+    .combatActions {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="game">
+
+
+<header>
+
+<h1>THE SHATTERED CROWN</h1>
+
+<p>
+A D&D-inspired interactive fantasy campaign
+</p>
+
+</header>
+
+
+<div class="layout">
+
+
+<!-- =====================================
+     SIDEBAR
+===================================== -->
+
+<aside class="sidebar">
+
+<h2>⚔ Your Character</h2>
+
+
+<div class="stat">
+
+<div class="statName">
+Name
+</div>
+
+<div
+    class="statValue"
+    id="playerName"
+>
+Adventurer
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statName">
+Class
+</div>
+
+<div
+    class="statValue"
+    id="playerClass"
+>
+Unknown
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statName">
+Level
+</div>
+
+<div
+    class="statValue"
+    id="level"
+>
+1
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statName">
+Hit Points
+</div>
+
+<div
+    class="statValue"
+    id="hpText"
+>
+30 / 30
+</div>
+
+<div class="bar">
+
+<div
+    class="barInner hp"
+    id="hpBar"
+    style="width:100%"
+>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statName">
+Experience
+</div>
+
+<div
+    class="statValue"
+    id="xpText"
+>
+0 / 100
+</div>
+
+<div class="bar">
+
+<div
+    class="barInner xp"
+    id="xpBar"
+    style="width:0%"
+>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statName">
+Gold
+</div>
+
+<div
+    class="statValue"
+    id="gold"
+>
+20
+</div>
+
+</div>
+
+
+<div class="inventory">
+
+<div class="statName">
+Inventory
+</div>
+
+<div id="inventory">
+
+<div class="inventoryItem">
+🧪 Healing Potion ×2
+</div>
+
+<div class="inventoryItem">
+🗡 Iron Sword
+</div>
+
+<div class="inventoryItem">
+🪙 Old Silver Coin
+</div>
+
+</div>
+
+</div>
+
+
+<div class="saveButtons">
+
+<button onclick="saveGame()">
+SAVE
+</button>
+
+<button onclick="loadGame()">
+LOAD
+</button>
+
+</div>
+
+</aside>
+
+
+<!-- =====================================
+     MAIN GAME
+===================================== -->
+
+<main class="main">
+
+
+<div class="sceneImage">
+
+<canvas
+    id="scene"
+    width="1000"
+    height="500"
+>
+</canvas>
+
+</div>
+
+
+<div
+    class="chapter"
+    id="chapter"
+>
+CHAPTER I
+</div>
+
+
+<h2 id="title">
+The Black Bell
+</h2>
+
+
+<div
+    class="story"
+    id="story"
+>
+</div>
+
+
+<div
+    class="choices"
+    id="choices"
+>
+</div>
+
+
+<!-- =====================================
+     COMBAT
+===================================== -->
+
+<div
+    class="combat"
+    id="combat"
+>
+
+<div class="enemy">
+
+<div>
+
+<div class="statName">
+ENEMY
+</div>
+
+<div
+    class="enemyName"
+    id="enemyName"
+>
+Goblin
+</div>
+
+</div>
+
+<div>
+
+<div class="statName">
+ENEMY HP
+</div>
+
+<div
+    class="statValue"
+    id="enemyHP"
+>
+20 / 20
+</div>
+
+<div class="bar">
+
+<div
+    class="barInner hp"
+    id="enemyBar"
+    style="width:100%"
+>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="combatActions">
+
+<button onclick="attack()">
+⚔ Attack
+</button>
+
+<button onclick="heavyAttack()">
+💥 Heavy Attack
+</button>
+
+<button onclick="usePotion()">
+🧪 Potion
+</button>
+
+</div>
+
+</div>
+
+
+<div
+    class="log"
+    id="log"
+></div>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let game = {
+
+    name:
+        "Adventurer",
+
+    class:
+        "Wanderer",
+
+    level:
+        1,
+
+    hp:
+        30,
+
+    maxHp:
+        30,
+
+    xp:
+        0,
+
+    xpNeeded:
+        100,
+
+    gold:
+        20,
+
+    potions:
+        2,
+
+    weapon:
+        "Iron Sword",
+
+    location:
+        "village",
+
+    flags:
+        {},
+
+    enemy:
+        null
+
+};
+
+
+/* =====================================================
+   RANDOM
+===================================================== */
+
+function random(array) {
+
+    return array[
+        Math.floor(
+            Math.random() *
+            array.length
+        )
+    ];
+
+}
+
+
+/* =====================================================
+   DICE
+===================================================== */
+
+function roll(sides) {
+
+    return Math.floor(
+        Math.random() *
+        sides
+    ) + 1;
+
+}
+
+
+function d20() {
+
+    const result =
+        roll(20);
+
+    log(
+        "🎲 You rolled a " +
+        result +
+        " on a d20."
+    );
+
+    return result;
+
+}
+
+
+/* =====================================================
+   LOG
+===================================================== */
+
+function log(text) {
+
+    const element =
+        document.getElementById("log");
+
+    const line =
+        document.createElement("div");
+
+    line.className =
+        "logLine";
+
+    line.textContent =
+        text;
+
+    element.appendChild(line);
+
+    element.scrollTop =
+        element.scrollHeight;
+
+}
+
+
+/* =====================================================
+   UPDATE UI
+===================================================== */
+
+function updateUI() {
+
+    document.getElementById(
+        "playerName"
+    ).textContent =
+        game.name;
+
+
+    document.getElementById(
+        "playerClass"
+    ).textContent =
+        game.class;
+
+
+    document.getElementById(
+        "level"
+    ).textContent =
+        game.level;
+
+
+    document.getElementById(
+        "hpText"
+    ).textContent =
+        game.hp +
+        " / " +
+        game.maxHp;
+
+
+    document.getElementById(
+        "hpBar"
+    ).style.width =
+        Math.max(
+            0,
+            game.hp /
+            game.maxHp *
+            100
+        ) + "%";
+
+
+    document.getElementById(
+        "xpText"
+    ).textContent =
+        game.xp +
+        " / " +
+        game.xpNeeded;
+
+
+    document.getElementById(
+        "xpBar"
+    ).style.width =
+        Math.min(
+            100,
+            game.xp /
+            game.xpNeeded *
+            100
+        ) + "%";
+
+
+    document.getElementById(
+        "gold"
+    ).textContent =
+        game.gold;
+
+
+    document.getElementById(
+        "inventory"
+    ).innerHTML =
+
+        `<div class="inventoryItem">
+        🧪 Healing Potion ×${game.potions}
+        </div>
+
+        <div class="inventoryItem">
+        🗡 ${game.weapon}
+        </div>
+
+        <div class="inventoryItem">
+        🪙 Gold: ${game.gold}
+        </div>`;
+
+
+    if (
+        game.enemy
+    ) {
+
+        document.getElementById(
+            "enemyName"
+        ).textContent =
+            game.enemy.name;
+
+
+        document.getElementById(
+            "enemyHP"
+        ).textContent =
+            game.enemy.hp +
+            " / " +
+            game.enemy.maxHp;
+
+
+        document.getElementById(
+            "enemyBar"
+        ).style.width =
+            Math.max(
+                0,
+                game.enemy.hp /
+                game.enemy.maxHp *
+                100
+            ) + "%";
+
+    }
+
+}
+
+
+/* =====================================================
+   LEVEL UP
+===================================================== */
+
+function gainXP(amount) {
+
+    game.xp += amount;
+
+    log(
+        "✨ You gained " +
+        amount +
+        " XP."
+    );
+
+
+    while (
+        game.xp >=
+        game.xpNeeded
+    ) {
+
+        game.xp -=
+            game.xpNeeded;
+
+        game.level++;
+
+        game.xpNeeded =
+            Math.floor(
+                game.xpNeeded *
+                1.35
+            );
+
+        game.maxHp +=
+            8;
+
+        game.hp =
+            game.maxHp;
+
+        log(
+            "⭐ LEVEL UP! You are now level " +
+            game.level +
+            "!"
+        );
+
+    }
+
+    updateUI();
+
+}
+
+
+/* =====================================================
+   PLAYER CREATION
+===================================================== */
+
+function createCharacter() {
+
+    const name =
+        prompt(
+            "What is your character's name?"
+        );
+
+
+    if (name) {
+
+        game.name =
+            name;
+
+    }
+
+
+    const classes = [
+
+        "Fighter",
+        "Rogue",
+        "Wizard",
+        "Ranger",
+        "Paladin",
+        "Warlock",
+        "Barbarian",
+        "Monk"
+
+    ];
+
+
+    const choice =
+        prompt(
+            "Choose your class:\n\n" +
+            "1. Fighter\n" +
+            "2. Rogue\n" +
+            "3. Wizard\n" +
+            "4. Ranger\n" +
+            "5. Paladin\n" +
+            "6. Warlock\n" +
+            "7. Barbarian\n" +
+            "8. Monk"
+        );
+
+
+    const index =
+        parseInt(choice) - 1;
+
+
+    if (
+        index >= 0 &&
+        index < classes.length
+    ) {
+
+        game.class =
+            classes[index];
+
+    }
+
+
+    if (
+        game.class ===
+        "Wizard"
+    ) {
+
+        game.weapon =
+            "Arcane Staff";
+
+        game.maxHp =
+            24;
+
+        game.hp =
+            24;
+
+    }
+
+
+    if (
+        game.class ===
+        "Barbarian"
+    ) {
+
+        game.weapon =
+            "Great Axe";
+
+        game.maxHp =
+            38;
+
+        game.hp =
+            38;
+
+    }
+
+
+    if (
+        game.class ===
+        "Rogue"
+    ) {
+
+        game.weapon =
+            "Twin Daggers";
+
+    }
+
+
+    if (
+        game.class ===
+        "Paladin"
+    ) {
+
+        game.weapon =
+            "Holy Longsword";
+
+        game.maxHp =
+            34;
+
+        game.hp =
+            34;
+
+    }
+
+
+    updateUI();
+
+}
+
+
+/* =====================================================
+   STORY ENGINE
+===================================================== */
+
+function scene(
+    chapter,
+    title,
+    text,
+    choices
+) {
+
+    document.getElementById(
+        "chapter"
+    ).textContent =
+        chapter;
+
+    document.getElementById(
+        "title"
+    ).textContent =
+        title;
+
+    document.getElementById(
+        "story"
+    ).innerHTML =
+        text;
+
+
+    const choiceBox =
+        document.getElementById(
+            "choices"
+        );
+
+    choiceBox.innerHTML =
+        "";
+
+
+    choices.forEach(
+        choice => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.textContent =
+                choice.text;
+
+            button.onclick =
+                choice.action;
+
+            choiceBox.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "combat"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   CHAPTER 1
+===================================================== */
+
+function beginning() {
+
+    drawScene(
+        "village"
+    );
+
+
+    scene(
+
+        "CHAPTER I",
+
+        "The Black Bell",
+
+        `<p>
+        Rain has fallen over the village of
+        <strong>Greyhaven</strong> for three days.
+        </p>
+
+        <p>
+        You arrive just before sunset.
+        Nobody is outside.
+        No fires burn in the windows.
+        </p>
+
+        <p>
+        Then the bell in the old chapel rings.
+        Once.
+        Twice.
+        Three times.
+        </p>
+
+        <p>
+        The fourth strike never comes.
+        </p>
+
+        <p>
+        A terrified voice whispers from an alley:
+        <em>
+        "The king's crown has been broken.
+        Something beneath the mountain has awakened."
+        </em>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🏚 Enter the abandoned inn",
+
+                action:
+                    () => inn()
+
+            },
+
+            {
+                text:
+                    "⛪ Investigate the chapel",
+
+                action:
+                    () => chapel()
+
+            },
+
+            {
+                text:
+                    "🌲 Follow the voice into the forest",
+
+                action:
+                    () => forest()
+
+            },
+
+            {
+                text:
+                    "🗡 Search the village for survivors",
+
+                action:
+                    () => searchVillage()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   INN
+===================================================== */
+
+function inn() {
+
+    drawScene(
+        "inn"
+    );
+
+
+    scene(
+
+        "CHAPTER I",
+
+        "The Empty Inn",
+
+        `<p>
+        The inn smells of smoke and wet wood.
+        </p>
+
+        <p>
+        Every table is abandoned except one.
+        A single black candle burns beside
+        a sealed letter.
+        </p>
+
+        <p>
+        The letter bears the symbol of a
+        <strong>broken crown</strong>.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "✉ Open the letter",
+
+                action:
+                    () => openLetter()
+
+            },
+
+            {
+                text:
+                    "🔍 Search the inn",
+
+                action:
+                    () => searchInn()
+
+            },
+
+            {
+                text:
+                    "🚪 Leave immediately",
+
+                action:
+                    () => forest()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   LETTER
+===================================================== */
+
+function openLetter() {
+
+    game.flags.letter =
+        true;
+
+    game.gold +=
+        10;
+
+
+    log(
+        "You found 10 gold inside the letter."
+    );
+
+
+    scene(
+
+        "CHAPTER I",
+
+        "The King's Warning",
+
+        `<p>
+        The letter was written by
+        <strong>King Aldren</strong>.
+        </p>
+
+        <p>
+        It explains that the royal crown was
+        shattered into three pieces.
+        Each piece contains part of an ancient
+        seal.
+        </p>
+
+        <p>
+        If the three fragments are reunited,
+        the seal can either be restored...
+        or completely destroyed.
+        </p>
+
+        <p>
+        The first fragment lies beneath
+        Greyhaven.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⛪ Search beneath the chapel",
+
+                action:
+                    () => chapel()
+
+            },
+
+            {
+                text:
+                    "🕳 Search the old well",
+
+                action:
+                    () => well()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH INN
+===================================================== */
+
+function searchInn() {
+
+    const rollResult =
+        d20();
+
+
+    if (
+        rollResult >= 12
+    ) {
+
+        game.potions++;
+
+        log(
+            "You found a healing potion!"
+        );
+
+    } else {
+
+        log(
+            "You found nothing useful."
+        );
+
+    }
+
+
+    scene(
+
+        "CHAPTER I",
+
+        "Something Beneath the Floor",
+
+        `<p>
+        As you search the inn, you hear
+        scratching beneath the floorboards.
+        </p>
+
+        <p>
+        Something is moving underneath you.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⚔ Tear up the floor",
+
+                action:
+                    () => ratCombat()
+
+            },
+
+            {
+                text:
+                    "🚪 Leave",
+
+                action:
+                    () => chapel()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   RAT COMBAT
+===================================================== */
+
+function ratCombat() {
+
+    startCombat({
+
+        name:
+            "Giant Grave Rat",
+
+        hp:
+            18,
+
+        maxHp:
+            18,
+
+        attack:
+            5,
+
+        xp:
+            35
+
+    });
+
+}
+
+
+/* =====================================================
+   CHAPEL
+===================================================== */
+
+function chapel() {
+
+    drawScene(
+        "chapel"
+    );
+
+
+    scene(
+
+        "CHAPTER II",
+
+        "The Silent Chapel",
+
+        `<p>
+        The chapel doors hang open.
+        </p>
+
+        <p>
+        Hundreds of candles cover the floor,
+        but every flame is black.
+        </p>
+
+        <p>
+        At the altar stands a stone statue
+        of the old king.
+        Its hands are holding something.
+        </p>
+
+        <p>
+        You realize the statue's eyes are moving.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🗿 Approach the statue",
+
+                action:
+                    () => statue()
+
+            },
+
+            {
+                text:
+                    "🕯 Extinguish the candles",
+
+                action:
+                    () => candles()
+
+            },
+
+            {
+                text:
+                    "⬇ Search beneath the altar",
+
+                action:
+                    () => crypt()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   STATUE
+===================================================== */
+
+function statue() {
+
+    const result =
+        d20();
+
+
+    if (
+        result >= 14
+    ) {
+
+        game.gold +=
+            25;
+
+        gainXP(
+            25
+        );
+
+        scene(
+
+            "CHAPTER II",
+
+            "The King's Secret",
+
+            `<p>
+            The statue speaks.
+            </p>
+
+            <p>
+            <em>
+            "Three fragments.
+            Three guardians.
+            One crown.
+            </em>
+            </p>
+
+            <p>
+            The statue gives you a pouch containing
+            25 gold and reveals a hidden stairway.
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "⬇ Descend",
+
+                    action:
+                        () => crypt()
+
+                }
+
+            ]
+
+        );
+
+    }
+
+    else {
+
+        startCombat({
+
+            name:
+                "Possessed Knight",
+
+            hp:
+                32,
+
+            maxHp:
+                32,
+
+            attack:
+                7,
+
+            xp:
+                60
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   CANDLES
+===================================================== */
+
+function candles() {
+
+    game.flags.candles =
+        true;
+
+
+    gainXP(
+        30
+    );
+
+
+    scene(
+
+        "CHAPTER II",
+
+        "The Black Flame",
+
+        `<p>
+        One by one, the candles go out.
+        </p>
+
+        <p>
+        Beneath the altar you discover a
+        hidden inscription:
+        </p>
+
+        <p>
+        <strong>
+        "When the moon touches the mountain,
+        seek the place where the dead kings sleep."
+        </strong>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⬇ Find the crypt",
+
+                action:
+                    () => crypt()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   CRYPT
+===================================================== */
+
+function crypt() {
+
+    drawScene(
+        "crypt"
+    );
+
+
+    scene(
+
+        "CHAPTER II",
+
+        "The King's Crypt",
+
+        `<p>
+        You descend beneath the chapel.
+        </p>
+
+        <p>
+        Hundreds of stone coffins line the walls.
+        </p>
+
+        <p>
+        At the center stands an ancient pedestal.
+        Floating above it is a fragment of
+        black crystal.
+        </p>
+
+        <p>
+        Before you can reach it,
+        something enormous moves in the darkness.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⚔ Take the crystal",
+
+                action:
+                    () => crystalGuardian()
+
+            },
+
+            {
+                text:
+                    "🔍 Search the coffins first",
+
+                action:
+                    () => coffinSearch()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   COFFIN SEARCH
+===================================================== */
+
+function coffinSearch() {
+
+    const result =
+        d20();
+
+
+    if (
+        result >= 10
+    ) {
+
+        game.potions++;
+
+        game.gold +=
+            30;
+
+        log(
+            "You found a potion and 30 gold."
+        );
+
+    }
+
+
+    crystalGuardian();
+
+}
+
+
+/* =====================================================
+   CRYSTAL GUARDIAN
+===================================================== */
+
+function crystalGuardian() {
+
+    startCombat({
+
+        name:
+            "Grave Guardian",
+
+        hp:
+            45,
+
+        maxHp:
+            45,
+
+        attack:
+            8,
+
+        xp:
+            100
+
+    });
+
+}
+
+
+/* =====================================================
+   WELL
+===================================================== */
+
+function well() {
+
+    drawScene(
+        "well"
+    );
+
+
+    scene(
+
+        "CHAPTER II",
+
+        "The Old Well",
+
+        `<p>
+        The well is older than the village.
+        </p>
+
+        <p>
+        A rope descends into absolute darkness.
+        </p>
+
+        <p>
+        Something below is whispering your name.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⬇ Climb down",
+
+                action:
+                    () => wellBelow()
+
+            },
+
+            {
+                text:
+                    "🪙 Throw a coin into the darkness",
+
+                action:
+                    () => coinWell()
+
+            },
+
+            {
+                text:
+                    "🚪 Walk away",
+
+                action:
+                    () => chapel()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   WELL BELOW
+===================================================== */
+
+function wellBelow() {
+
+    const result =
+        d20();
+
+
+    if (
+        result >= 13
+    ) {
+
+        game.gold +=
+            50;
+
+        gainXP(
+            50
+        );
+
+
+        scene(
+
+            "CHAPTER II",
+
+            "The Hidden Shrine",
+
+            `<p>
+            At the bottom of the well you find
+            an ancient shrine.
+            </p>
+
+            <p>
+            A spirit offers you a choice:
+            power or knowledge.
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "⚡ Choose power",
+
+                    action:
+                        () => {
+
+                            game.maxHp +=
+                                10;
+
+                            game.hp =
+                                game.maxHp;
+
+                            log(
+                                "The spirit strengthens you."
+                            );
+
+                            crypt();
+
+                        }
+
+                },
+
+                {
+                    text:
+                        "📜 Choose knowledge",
+
+                    action:
+                        () => {
+
+                            game.flags.knowledge =
+                                true;
+
+                            gainXP(
+                                80
+                            );
+
+                            crypt();
+
+                        }
+
+                }
+
+            ]
+
+        );
+
+    }
+
+    else {
+
+        startCombat({
+
+            name:
+                "Well Wraith",
+
+            hp:
+                28,
+
+            maxHp:
+                28,
+
+            attack:
+                6,
+
+            xp:
+                65
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   COIN
+===================================================== */
+
+function coinWell() {
+
+    game.gold--;
+
+    log(
+        "The whispering stops."
+    );
+
+
+    game.flags.wellSafe =
+        true;
+
+
+    scene(
+
+        "CHAPTER II",
+
+        "The Quiet Well",
+
+        `<p>
+        For a moment, everything is silent.
+        </p>
+
+        <p>
+        Then you hear a voice:
+        <em>
+        "The forest remembers."
+        </em>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🌲 Enter the forest",
+
+                action:
+                    () => forest()
+
+            },
+
+            {
+                text:
+                    "⛪ Return to the chapel",
+
+                action:
+                    () => chapel()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   FOREST
+===================================================== */
+
+function forest() {
+
+    drawScene(
+        "forest"
+    );
+
+
+    scene(
+
+        "CHAPTER III",
+
+        "The Whispering Forest",
+
+        `<p>
+        The forest begins immediately beyond
+        Greyhaven.
+        </p>
+
+        <p>
+        The trees are impossibly tall.
+        </p>
+
+        <p>
+        You hear footsteps behind you.
+        When you turn around, there is nothing.
+        </p>
+
+        <p>
+        Then a hooded figure steps from
+        between the trees.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🗣 Talk to the stranger",
+
+                action:
+                    () => stranger()
+
+            },
+
+            {
+                text:
+                    "⚔ Attack",
+
+                action:
+                    () => forestCombat()
+
+            },
+
+            {
+                text:
+                    "🏃 Run deeper into the forest",
+
+                action:
+                    () => deepForest()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   STRANGER
+===================================================== */
+
+function stranger() {
+
+    scene(
+
+        "CHAPTER III",
+
+        "The Hooded Stranger",
+
+        `<p>
+        The stranger lowers their hood.
+        </p>
+
+        <p>
+        They are an elf with silver eyes.
+        </p>
+
+        <p>
+        <em>
+        "You are searching for the crown."
+        </em>
+        </p>
+
+        <p>
+        They explain that the second fragment
+        is held by a creature called
+        <strong>The Thorn Queen</strong>.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🤝 Trust the stranger",
+
+                action:
+                    () => {
+
+                        game.flags.ally =
+                            true;
+
+                        game.gold +=
+                            20;
+
+                        gainXP(
+                            40
+                        );
+
+                        thornQueen();
+
+                    }
+
+            },
+
+            {
+                text:
+                    "🗡 Demand the location",
+
+                action:
+                    () => {
+
+                        startCombat({
+
+                            name:
+                                "Silver-Eyed Elf",
+
+                            hp:
+                                35,
+
+                            maxHp:
+                                35,
+
+                            attack:
+                                7,
+
+                            xp:
+                                80
+
+                        });
+
+                    }
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   FOREST COMBAT
+===================================================== */
+
+function forestCombat() {
+
+    startCombat({
+
+        name:
+            "Forest Revenant",
+
+        hp:
+            30,
+
+        maxHp:
+            30,
+
+        attack:
+            7,
+
+        xp:
+            75
+
+    });
+
+}
+
+
+/* =====================================================
+   DEEP FOREST
+===================================================== */
+
+function deepForest() {
+
+    const result =
+        d20();
+
+
+    if (
+        result >= 12
+    ) {
+
+        game.potions +=
+            2;
+
+        gainXP(
+            50
+        );
+
+        thornQueen();
+
+    }
+
+    else {
+
+        forestCombat();
+
+    }
+
+}
+
+
+/* =====================================================
+   THORN QUEEN
+===================================================== */
+
+function thornQueen() {
+
+    drawScene(
+        "queen"
+    );
+
+
+    scene(
+
+        "CHAPTER III",
+
+        "The Thorn Queen",
+
+        `<p>
+        You enter a massive clearing.
+        </p>
+
+        <p>
+        At its center sits a woman made of
+        bark, flowers, and bone.
+        </p>
+
+        <p>
+        She holds the second crown fragment
+        in one hand.
+        </p>
+
+        <p>
+        <em>
+        "Mortals always believe power belongs
+        to whoever can kill for it."
+        </em>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🗣 Challenge her to a duel",
+
+                action:
+                    () => thornCombat()
+
+            },
+
+            {
+                text:
+                    "🤝 Ask for the fragment",
+
+                action:
+                    () => queenDeal()
+
+            },
+
+            {
+                text:
+                    "🔥 Burn the forest",
+
+                action:
+                    () => burnForest()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   QUEEN DEAL
+===================================================== */
+
+function queenDeal() {
+
+    if (
+        game.flags.knowledge
+    ) {
+
+        gainXP(
+            100
+        );
+
+        game.flags.queenAlly =
+            true;
+
+        scene(
+
+            "CHAPTER III",
+
+            "An Unlikely Alliance",
+
+            `<p>
+            Because you chose knowledge beneath
+            the well, you understand the ancient
+            language of the Queen.
+            </p>
+
+            <p>
+            She gives you the second fragment
+            willingly.
+            </p>
+
+            <p>
+            She warns you that the final fragment
+            lies beneath the mountain.
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "⛰ Travel to the mountain",
+
+                    action:
+                        () => mountain()
+
+                }
+
+            ]
+
+        );
+
+    }
+
+    else {
+
+        scene(
+
+            "CHAPTER III",
+
+            "The Queen's Price",
+
+            `<p>
+            The Queen demands a sacrifice.
+            </p>
+
+            <p>
+            She wants your most valuable possession.
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "💰 Give 50 gold",
+
+                    action:
+                        () => {
+
+                            if (
+                                game.gold >= 50
+                            ) {
+
+                                game.gold -=
+                                    50;
+
+                                mountain();
+
+                            }
+
+                            else {
+
+                                thornCombat();
+
+                            }
+
+                        }
+
+                },
+
+                {
+                    text:
+                        "⚔ Refuse",
+
+                    action:
+                        () => thornCombat()
+
+                }
+
+            ]
+
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   THORN COMBAT
+===================================================== */
+
+function thornCombat() {
+
+    startCombat({
+
+        name:
+            "Thorn Queen",
+
+        hp:
+            65,
+
+        maxHp:
+            65,
+
+        attack:
+            10,
+
+        xp:
+            160
+
+    });
+
+}
+
+
+/* =====================================================
+   BURN FOREST
+===================================================== */
+
+function burnForest() {
+
+    game.flags.darkPath =
+        true;
+
+    game.gold +=
+        100;
+
+    gainXP(
+        120
+    );
+
+
+    scene(
+
+        "CHAPTER III",
+
+        "Ashes of the Forest",
+
+        `<p>
+        The flames consume the ancient trees.
+        </p>
+
+        <p>
+        The Queen screams.
+        </p>
+
+        <p>
+        You recover the second fragment
+        from the ashes.
+        </p>
+
+        <p>
+        But something has changed.
+        </p>
+
+        <p>
+        Far away, beneath the mountain,
+        something awakens.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⛰ Go to the mountain",
+
+                action:
+                    () => mountain()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   MOUNTAIN
+===================================================== */
+
+function mountain() {
+
+    drawScene(
+        "mountain"
+    );
+
+
+    scene(
+
+        "CHAPTER IV",
+
+        "The Black Mountain",
+
+        `<p>
+        The mountain rises above the clouds.
+        </p>
+
+        <p>
+        At its base stands a gigantic stone door.
+        </p>
+
+        <p>
+        Three symbols are carved into it:
+        a sword, an eye, and a crown.
+        </p>
+
+        <p>
+        Behind the door you hear something
+        breathing.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⚔ Press the sword",
+
+                action:
+                    () => mountainSword()
+
+            },
+
+            {
+                text:
+                    "👁 Press the eye",
+
+                action:
+                    () => mountainEye()
+
+            },
+
+            {
+                text:
+                    "👑 Press the crown",
+
+                action:
+                    () => mountainCrown()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   MOUNTAIN PUZZLE
+===================================================== */
+
+function mountainSword() {
+
+    if (
+        game.class ===
+        "Fighter" ||
+        game.class ===
+        "Barbarian" ||
+        game.class ===
+        "Paladin"
+    ) {
+
+        gainXP(
+            100
+        );
+
+        dungeon();
+
+    }
+
+    else {
+
+        startCombat({
+
+            name:
+                "Stone Sentinel",
+
+            hp:
+                40,
+
+            maxHp:
+                40,
+
+            attack:
+                8,
+
+            xp:
+                100
+
+        });
+
+    }
+
+}
+
+
+function mountainEye() {
+
+    if (
+        game.flags.knowledge
+    ) {
+
+        gainXP(
+            100
+        );
+
+        dungeon();
+
+    }
+
+    else {
+
+        game.hp -=
+            8;
+
+        log(
+            "The ancient magic burns you."
+        );
+
+        updateUI();
+
+        dungeon();
+
+    }
+
+}
+
+
+function mountainCrown() {
+
+    game.hp -=
+        5;
+
+    log(
+        "The crown symbol drains your strength."
+    );
+
+    updateUI();
+
+    dungeon();
+
+}
+
+
+/* =====================================================
+   DUNGEON
+===================================================== */
+
+function dungeon() {
+
+    drawScene(
+        "dungeon"
+    );
+
+
+    scene(
+
+        "CHAPTER IV",
+
+        "Beneath the Mountain",
+
+        `<p>
+        The door opens.
+        </p>
+
+        <p>
+        A vast underground city stretches
+        beneath the mountain.
+        </p>
+
+        <p>
+        At its center stands a throne.
+        </p>
+
+        <p>
+        On the throne sits a figure wearing
+        half of a shattered crown.
+        </p>
+
+        <p>
+        <strong>
+        "You brought the fragments."
+        </strong>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🗣 Talk to the King",
+
+                action:
+                    () => ancientKing()
+
+            },
+
+            {
+                text:
+                    "⚔ Attack immediately",
+
+                action:
+                    () => finalBoss()
+
+            },
+
+            {
+                text:
+                    "🔍 Search the chamber",
+
+                action:
+                    () => chamberSearch()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   CHAMBER SEARCH
+===================================================== */
+
+function chamberSearch() {
+
+    const result =
+        d20();
+
+
+    if (
+        result >= 13
+    ) {
+
+        game.maxHp +=
+            15;
+
+        game.hp =
+            game.maxHp;
+
+        gainXP(
+            100
+        );
+
+        log(
+            "You discovered an ancient relic."
+        );
+
+    }
+
+    else {
+
+        log(
+            "You find nothing."
+        );
+
+    }
+
+
+    ancientKing();
+
+}
+
+
+/* =====================================================
+   ANCIENT KING
+===================================================== */
+
+function ancientKing() {
+
+    scene(
+
+        "CHAPTER IV",
+
+        "The Forgotten King",
+
+        `<p>
+        The figure removes his crown.
+        </p>
+
+        <p>
+        He is not a king.
+        </p>
+
+        <p>
+        He is a prisoner.
+        </p>
+
+        <p>
+        He explains that the crown was created
+        to imprison an ancient entity called
+        <strong>The Hollow God</strong>.
+        </p>
+
+        <p>
+        The crown can be restored...
+        or destroyed.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "👑 Restore the crown",
+
+                action:
+                    () => restoreCrown()
+
+            },
+
+            {
+                text:
+                    "🔥 Destroy the crown",
+
+                action:
+                    () => destroyCrown()
+
+            },
+
+            {
+                text:
+                    "⚔ Free the Hollow God",
+
+                action:
+                    () => finalBoss()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   RESTORE
+===================================================== */
+
+function restoreCrown() {
+
+    game.flags.restored =
+        true;
+
+
+    scene(
+
+        "FINAL CHAPTER",
+
+        "The Crown Restored",
+
+        `<p>
+        You place the fragments together.
+        </p>
+
+        <p>
+        Light erupts through the chamber.
+        </p>
+
+        <p>
+        The Hollow God screams from beneath
+        the earth.
+        </p>
+
+        <p>
+        But the seal holds.
+        </p>
+
+        <p>
+        You have saved the kingdom.
+        </p>
+
+        <p>
+        <strong>
+        ENDING: THE GUARDIAN
+        </strong>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🌅 Continue into the epilogue",
+
+                action:
+                    () => ending("guardian")
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   DESTROY
+===================================================== */
+
+function destroyCrown() {
+
+    game.flags.destroyed =
+        true;
+
+
+    scene(
+
+        "FINAL CHAPTER",
+
+        "The Broken Crown",
+
+        `<p>
+        You raise the fragments above your head.
+        </p>
+
+        <p>
+        The ancient crown shatters.
+        </p>
+
+        <p>
+        Every magical barrier in the world
+        disappears.
+        </p>
+
+        <p>
+        The old gods awaken.
+        </p>
+
+        <p>
+        The world enters a new age.
+        </p>
+
+        <p>
+        <strong>
+        ENDING: THE AGE OF FREEDOM
+        </strong>
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "🌅 Continue into the epilogue",
+
+                action:
+                    () => ending("freedom")
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   FINAL BOSS
+===================================================== */
+
+function finalBoss() {
+
+    startCombat({
+
+        name:
+            "THE HOLLOW GOD",
+
+        hp:
+            100,
+
+        maxHp:
+            100,
+
+        attack:
+            13,
+
+        xp:
+            500
+
+    });
+
+}
+
+
+/* =====================================================
+   COMBAT SYSTEM
+===================================================== */
+
+function startCombat(enemy) {
+
+    game.enemy =
+        enemy;
+
+
+    document.getElementById(
+        "combat"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "choices"
+    ).innerHTML =
+        "";
+
+
+    log(
+        "⚔ Combat begins against " +
+        enemy.name +
+        "!"
+    );
+
+
+    updateUI();
+
+}
+
+
+/* =====================================================
+   ATTACK
+===================================================== */
+
+function attack() {
+
+    if (
+        !game.enemy
+    )
+        return;
+
+
+    const rollResult =
+        d20();
+
+
+    let damage =
+        roll(8) + game.level;
+
+
+    if (
+        rollResult === 20
+    ) {
+
+        damage *=
+            2;
+
+        log(
+            "💥 CRITICAL HIT!"
+        );
+
+    }
+
+    else if (
+        rollResult <= 4
+    ) {
+
+        damage =
+            0;
+
+        log(
+            "You miss!"
+
+        );
+
+    }
+
+
+    game.enemy.hp -=
+        damage;
+
+
+    log(
+        "You deal " +
+        damage +
+        " damage."
+    );
+
+
+    checkEnemy();
+
+}
+
+
+/* =====================================================
+   HEAVY ATTACK
+===================================================== */
+
+function heavyAttack() {
+
+    if (
+        !game.enemy
+    )
+        return;
+
+
+    const rollResult =
+        d20();
+
+
+    if (
+        rollResult >= 12
+    ) {
+
+        const damage =
+            roll(12) +
+            game.level * 2;
+
+
+        game.enemy.hp -=
+            damage;
+
+
+        log(
+            "💥 Heavy attack deals " +
+            damage +
+            " damage!"
+        );
+
+    }
+
+    else {
+
+        log(
+            "Your heavy attack misses!"
+        );
+
+    }
+
+
+    checkEnemy();
+
+}
+
+
+/* =====================================================
+   POTION
+===================================================== */
+
+function usePotion() {
+
+    if (
+        game.potions <= 0
+    ) {
+
+        log(
+            "You have no healing potions."
+        );
+
+        return;
+
+    }
+
+
+    game.potions--;
+
+    const healing =
+        roll(10) + 5;
+
+
+    game.hp =
+        Math.min(
+            game.maxHp,
+            game.hp + healing
+        );
+
+
+    log(
+        "🧪 You heal " +
+        healing +
+        " HP."
+    );
+
+
+    enemyAttack();
+
+    updateUI();
+
+}
+
+
+/* =====================================================
+   ENEMY CHECK
+===================================================== */
+
+function checkEnemy() {
+
+    updateUI();
+
+
+    if (
+        game.enemy.hp <= 0
+    ) {
+
+        const defeated =
+            game.enemy;
+
+
+        log(
+            "🏆 You defeated " +
+            defeated.name +
+            "!"
+        );
+
+
+        gainXP(
+            defeated.xp
+        );
+
+
+        game.gold +=
+            roll(20);
+
+
+        game.enemy =
+            null;
+
+
+        document.getElementById(
+            "combat"
+        ).style.display =
+            "none";
+
+
+        afterCombat();
+
+    }
+
+    else {
+
+        enemyAttack();
+
+    }
+
+}
+
+
+/* =====================================================
+   ENEMY ATTACK
+===================================================== */
+
+function enemyAttack() {
+
+    if (
+        !game.enemy
+    )
+        return;
+
+
+    const damage =
+        Math.max(
+            1,
+            game.enemy.attack +
+            roll(4) -
+            Math.floor(
+                game.level / 2
+            )
+        );
+
+
+    game.hp -=
+        damage;
+
+
+    log(
+        "💀 " +
+        game.enemy.name +
+        " deals " +
+        damage +
+        " damage."
+    );
+
+
+    if (
+        game.hp <= 0
+    ) {
+
+        game.hp =
+            1;
+
+
+        game.enemy =
+            null;
+
+
+        document.getElementById(
+            "combat"
+        ).style.display =
+            "none";
+
+
+        scene(
+
+            "DEFEAT",
+
+            "The Darkness Takes You",
+
+            `<p>
+            Your vision fades.
+            </p>
+
+            <p>
+            But death is not the end.
+            The shattered crown whispers your name.
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "🔄 Try again",
+
+                    action:
+                        () => {
+
+                            game.hp =
+                                game.maxHp;
+
+                            beginning();
+
+                        }
+
+                }
+
+            ]
+
+        );
+
+    }
+
+
+    updateUI();
+
+}
+
+
+/* =====================================================
+   AFTER COMBAT
+===================================================== */
+
+function afterCombat() {
+
+    if (
+        game.location ===
+        "village"
+    ) {
+
+        crypt();
+
+    }
+
+    else {
+
+        mountain();
+
+    }
+
+}
+
+
+/* =====================================================
+   VILLAGE SEARCH
+===================================================== */
+
+function searchVillage() {
+
+    drawScene(
+        "village"
+    );
+
+
+    scene(
+
+        "CHAPTER I",
+
+        "The Empty Village",
+
+        `<p>
+        You search the village.
+        </p>
+
+        <p>
+        Behind the blacksmith's shop you find
+        an injured guard.
+        </p>
+
+        <p>
+        He tells you that creatures came from
+        the forest and dragged several villagers
+        toward the chapel.
+        </p>`,
+
+        [
+
+            {
+                text:
+                    "⛪ Rescue the villagers",
+
+                action:
+                    () => chapel()
+
+            },
+
+            {
+                text:
+                    "🌲 Follow the creatures",
+
+                action:
+                    () => forest()
+
+            }
+
+        ]
+
+    );
+
+}
+
+
+/* =====================================================
+   ENDINGS
+===================================================== */
+
+function ending(type) {
+
+    drawScene(
+        "ending"
+    );
+
+
+    if (
+        type ===
+        "guardian"
+    ) {
+
+        scene(
+
+            "EPILOGUE",
+
+            "The Guardian",
+
+            `<p>
+            Years later, children tell stories
+            about the adventurer who saved the world.
+            </p>
+
+            <p>
+            The crown remains sealed.
+            </p>
+
+            <p>
+            You become its eternal guardian.
+            </p>
+
+            <p>
+            <strong>
+            THE END
+            </strong>
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "🔄 Play Again",
+
+                    action:
+                        () => {
+
+                            location.reload();
+
+                        }
+
+                }
+
+            ]
+
+        );
+
+    }
+
+
+    else {
+
+        scene(
+
+            "EPILOGUE",
+
+            "A New World",
+
+            `<p>
+            The old kingdoms collapse.
+            </p>
+
+            <p>
+            Magic spreads across the world.
+            </p>
+
+            <p>
+            Monsters emerge from forgotten places.
+            </p>
+
+            <p>
+            Some call you a hero.
+            Others call you the destroyer.
+            </p>
+
+            <p>
+            <strong>
+            THE END
+            </strong>
+            </p>`,
+
+            [
+
+                {
+                    text:
+                        "🔄 Play Again",
+
+                    action:
+                        () => {
+
+                            location.reload();
+
+                        }
+
+                }
+
+            ]
+
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function saveGame() {
+
+    localStorage.setItem(
+        "shatteredCrownSave",
+        JSON.stringify(game)
+    );
+
+
+    log(
+        "💾 Game saved."
+    );
+
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+function loadGame() {
+
+    const saved =
+        localStorage.getItem(
+            "shatteredCrownSave"
+        );
+
+
+    if (!saved) {
+
+        log(
+            "No saved game found."
+        );
+
+        return;
+
+    }
+
+
+    game =
+        JSON.parse(
+            saved
+        );
+
+
+    updateUI();
+
+    log(
+        "📂 Game loaded."
+    );
+
+}
+
+
+/* =====================================================
+   CANVAS SCENES
+===================================================== */
+
+function drawScene(type) {
+
+    const canvas =
+        document.getElementById(
+            "scene"
+        );
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    const W =
+        canvas.width;
+
+    const H =
+        canvas.height;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* SKY */
+
+    let sky;
+
+
+    if (
+        type ===
+        "forest"
+    ) {
+
+        sky =
+            ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                H
+            );
+
+        sky.addColorStop(
+            0,
+            "#101e2c"
+        );
+
+        sky.addColorStop(
+            1,
+            "#06100c"
+        );
+
+    }
+
+    else if (
+        type ===
+        "mountain"
+    ) {
+
+        sky =
+            ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                H
+            );
+
+        sky.addColorStop(
+            0,
+            "#11132b"
+        );
+
+        sky.addColorStop(
+            1,
+            "#07070e"
+        );
+
+    }
+
+    else {
+
+        sky =
+            ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                H
+            );
+
+        sky.addColorStop(
+            0,
+            "#20203b"
+        );
+
+        sky.addColorStop(
+            1,
+            "#08080e"
+        );
+
+    }
+
+
+    ctx.fillStyle =
+        sky;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* MOON */
+
+    ctx.fillStyle =
+        "#eee6c5";
+
+    ctx.shadowBlur =
+        30;
+
+    ctx.shadowColor =
+        "#ddd6aa";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        790,
+        100,
+        50,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur =
+        0;
+
+
+    /* STARS */
+
+    for (
+        let i = 0;
+        i < 70;
+        i++
+    ) {
+
+        ctx.fillStyle =
+            "rgba(255,255,255," +
+            (Math.random()*.7+.2) +
+            ")";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            Math.random()*W,
+            Math.random()*H*.55,
+            Math.random()*2,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    /* MOUNTAINS */
+
+    ctx.fillStyle =
+        "#121322";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        350
+    );
+
+    ctx.lineTo(
+        180,
+        170
+    );
+
+    ctx.lineTo(
+        310,
+        330
+    );
+
+    ctx.lineTo(
+        500,
+        120
+    );
+
+    ctx.lineTo(
+        720,
+        330
+    );
+
+    ctx.lineTo(
+        880,
+        180
+    );
+
+    ctx.lineTo(
+        1000,
+        340
+    );
+
+    ctx.lineTo(
+        1000,
+        500
+    );
+
+    ctx.lineTo(
+        0,
+        500
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* FOREST */
+
+    if (
+        type ===
+        "forest" ||
+        type ===
+        "queen"
+    ) {
+
+        for (
+            let x=0;
+            x<W;
+            x+=70
+        ) {
+
+            const h =
+                150 +
+                Math.random()*170;
+
+            ctx.fillStyle =
+                "#0a160f";
+
+            ctx.fillRect(
+                x,
+                H-h,
+                25,
+                h
+            );
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x-70,
+                H-h+80
+            );
+
+            ctx.lineTo(
+                x+12,
+                H-h-80
+            );
+
+            ctx.lineTo(
+                x+95,
+                H-h+80
+            );
+
+            ctx.fill();
+
+        }
+
+    }
+
+
+    /* VILLAGE */
+
+    if (
+        type ===
+        "village"
+    ) {
+
+        for (
+            let i=0;
+            i<5;
+            i++
+        ) {
+
+            const x =
+                100+i*180;
+
+            ctx.fillStyle =
+                "#211b24";
+
+            ctx.fillRect(
+                x,
+                300,
+                130,
+                100
+            );
+
+
+            ctx.fillStyle =
+                "#352630";
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x-15,
+                300
+            );
+
+            ctx.lineTo(
+                x+65,
+                230
+            );
+
+            ctx.lineTo(
+                x+145,
+                300
+            );
+
+            ctx.fill();
+
+
+            ctx.fillStyle =
+                "#e3b55e";
+
+            ctx.fillRect(
+                x+25,
+                330,
+                20,
+                25
+            );
+
+            ctx.fillRect(
+                x+85,
+                330,
+                20,
+                25
+            );
+
+        }
+
+    }
+
+
+    /* CHAPEL */
+
+    if (
+        type ===
+        "chapel"
+    ) {
+
+        ctx.fillStyle =
+            "#292633";
+
+        ctx.fillRect(
+            350,
+            170,
+            300,
+            250
+        );
+
+
+        ctx.fillStyle =
+            "#3b3448";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            310,
+            170
+        );
+
+        ctx.lineTo(
+            500,
+            60
+        );
+
+        ctx.lineTo(
+            690,
+            170
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#d7b768";
+
+        ctx.fillRect(
+            490,
+            50,
+            20,
+            120
+        );
+
+    }
+
+
+    /* MOUNTAIN */
+
+    if (
+        type ===
+        "mountain"
+    ) {
+
+        ctx.fillStyle =
+            "#11121b";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            250,
+            500
+        );
+
+        ctx.lineTo(
+            500,
+            80
+        );
+
+        ctx.lineTo(
+            750,
+            500
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#25263b";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            410,
+            230
+        );
+
+        ctx.lineTo(
+            500,
+            80
+        );
+
+        ctx.lineTo(
+            570,
+            230
+        );
+
+        ctx.fill();
+
+    }
+
+
+    /* DUNGEON */
+
+    if (
+        type ===
+        "crypt" ||
+        type ===
+        "dungeon"
+    ) {
+
+        ctx.fillStyle =
+            "#101017";
+
+        ctx.fillRect(
+            0,
+            250,
+            W,
+            250
+        );
+
+
+        for (
+            let x=80;
+            x<W;
+            x+=170
+        ) {
+
+            ctx.fillStyle =
+                "#27242d";
+
+            ctx.fillRect(
+                x,
+                150,
+                70,
+                350
+            );
+
+        }
+
+
+        ctx.strokeStyle =
+            "#8b55ff";
+
+        ctx.lineWidth =
+            4;
+
+        ctx.shadowBlur =
+            20;
+
+        ctx.shadowColor =
+            "#8b55ff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            500,
+            300,
+            90,
+            0,
+            Math.PI*2
+        );
+
+        ctx.stroke();
+
+        ctx.shadowBlur =
+            0;
+
+    }
+
+
+    /* THORN QUEEN */
+
+    if (
+        type ===
+        "queen"
+    ) {
+
+        ctx.strokeStyle =
+            "#315b38";
+
+        ctx.lineWidth =
+            12;
+
+        for (
+            let i=0;
+            i<20;
+            i++
+        ) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                500,
+                430
+            );
+
+            ctx.lineTo(
+                Math.random()*W,
+                Math.random()*300
+            );
+
+            ctx.stroke();
+
+        }
+
+
+        ctx.fillStyle =
+            "#5b243e";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            500,
+            260,
+            70,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    /* WELL */
+
+    if (
+        type ===
+        "well"
+    ) {
+
+        ctx.fillStyle =
+            "#252330";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            500,
+            330,
+            120,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#050509";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            500,
+            330,
+            80,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.strokeStyle =
+            "#8b7857";
+
+        ctx.lineWidth =
+            12;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            500,
+            100
+        );
+
+        ctx.lineTo(
+            500,
+            330
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    /* GROUND */
+
+    ctx.fillStyle =
+        "#08090d";
+
+    ctx.fillRect(
+        0,
+        400,
+        W,
+        100
+    );
+
+
+    /* VIGNETTE */
+
+    const vignette =
+        ctx.createRadialGradient(
+            W/2,
+            H/2,
+            100,
+            W/2,
+            H/2,
+            650
+        );
+
+    vignette.addColorStop(
+        0,
+        "rgba(0,0,0,0)"
+    );
+
+    vignette.addColorStop(
+        1,
+        "rgba(0,0,0,.7)"
+    );
+
+    ctx.fillStyle =
+        vignette;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+createCharacter();
+
+beginning();
+
+updateUI();
+
+log(
+    "Welcome to The Shattered Crown."
+);
+
+log(
+    "Your choices will determine the ending."
+);
+
+</script>
+
+</body>
+</html>
